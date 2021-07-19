@@ -1,10 +1,12 @@
 ```
-.▄▄ ·  ▄▄·       ▄▄▄  ▪   ▄▄▄· 
-▐█ ▀. ▐█ ▌▪▪     ▀▄ █·██ ▐█ ▀█ 
-▄▀▀▀█▄██ ▄▄ ▄█▀▄ ▐▀▀▄ ▐█·▄█▀▀█ 
-▐█▄▪▐█▐███▌▐█▌.▐▌▐█•█▌▐█▌▐█ ▪▐▌
- ▀▀▀▀ ·▀▀▀  ▀█▄▀▪.▀  ▀▀▀▀ ▀  ▀ 
+                          .__        
+  ______ ____  ___________|__|____   
+ /  ___// ___\/  _ \_  __ \  \__  \  
+ \___ \\  \__(  <_> )  | \/  |/ __ \_
+/____  >\___  >____/|__|  |__(____  /
+     \/     \/                    \/ 
 ```
+
 
 
 #### Human-rock symbiosis
@@ -19,6 +21,7 @@ twilio login #ask nick for deets
 
 ## Test
 ```
+export OPENAI_API_KEY=xxxxx
 npm start
 ```
 
@@ -28,12 +31,12 @@ twilio serverless:deploy
 ```
 
 ## Todo
-* Use GPT3 for responses
+* ~~Use GPT3 for responses~~
 * separate content from code
 * record all interactions
 * composite cody's sounds with voice
 
 ## Issues
-* two.js will not work locally since it requires an event. Not sure how to test this. 
+* Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.
 
 Reference: https://www.twilio.com/docs/runtime/functions-assets-api/quickstart
