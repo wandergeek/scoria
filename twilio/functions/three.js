@@ -2,13 +2,12 @@ const axios = require('axios');
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-  const gpt3Response = twiml.say(await gpt3Handler(event));
+
+  twiml.say(await gpt3Handler(event));
   callback(null, twiml);
 };
 
 const gpt3Handler = async (event) => {
-  const actions = [];
-
   const instance = axios.create({
     baseURL: 'https://api.openai.com/v1/',
     headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
@@ -43,9 +42,10 @@ const gpt3Handler = async (event) => {
   try {
     const result = await instance.post('/engines/davinci/completions', completionParmas);
     botResponse = result.data.choices[0].text.trim();
+    console.log(`AI: ${botResponse}`)
     
   } catch (err) {
-    botResponse = "Sorry I died. Can you call back later?"
+    botResponse = "Sorry, I'm tired. Can you call back later?"
     console.log(err);
   }
 

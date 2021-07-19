@@ -21,12 +21,14 @@ twilio login #ask nick for deets
 
 ## Test
 ```
-export OPENAI_API_KEY=xxxxx
+cd twilio
+echo OPENAI_API_KEY=xxxxx >> .env #ask nick for deets
 npm start
 ```
 
 ## Deploy
 ```
+cd twilio
 twilio serverless:deploy
 ```
 
@@ -34,7 +36,7 @@ twilio serverless:deploy
 * ~~Use GPT3 for responses~~
 * separate content from code
 * record all interactions
-* composite cody's sounds with voice
+* composite cody's sounds with voice?
 
 ## Issues
 * Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.
