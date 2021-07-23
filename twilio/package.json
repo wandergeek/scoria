@@ -8,6 +8,7 @@
     "deploy": "twilio-run deploy"
   },
   "dependencies": {
+    "moment-timezone": "^0.5.33",
     "twilio": "^3.56"
   },
   "devDependencies": {
