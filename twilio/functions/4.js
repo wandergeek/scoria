@@ -1,4 +1,5 @@
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
+const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
@@ -10,7 +11,14 @@ exports.handler = async (context, event, callback) => {
   - ${userResponse}
   -`)
 
-  let response = `${userResponse} – is that what you said? You’re a ${getRandomAdjective()}. I’ve heard some people say that the reason for life is ${reason} Would you agree?`
+  let randomAdjective = utils.getRandomElement([
+    "charmer",
+    "kook",
+    "romantic",
+    "pessimist"
+])
+
+  let response = `${userResponse} – is that what you said? You’re a ${randomAdjective}. I’ve heard some people say that the reason for life is ${reason} Would you agree?`
 
   twiml.gather({
     input: 'speech',
@@ -21,9 +29,3 @@ exports.handler = async (context, event, callback) => {
 
   callback(null, twiml);
 };
-
-function getRandomAdjective() {
-  let adj = ["charmer","kook","romantic","pessimist"]; 
-  return adj[Math.floor(Math.random() * adj.length)];
-}
-

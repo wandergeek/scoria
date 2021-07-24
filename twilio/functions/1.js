@@ -5,10 +5,15 @@ exports.handler = async(context, event, callback) => {
   let moment = require('moment-timezone');
   let timezone = event.timezone || 'Australia/Melbourne';
   const hour = moment().tz(timezone).format('H');
-  const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10); //if we don't receive a real event with a callsid, make one up
+    //slicing the call sid to the last 10 chars, otherwise the twilio api complains. probably for good reason? we should probably key to something else.
+  const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10); 
+  const client = context.getTwilioClient();
 
-  //Create a sync map which will store all the persistent data for the call -- the map is keyed by the callSID from the event
-  await sync.createSyncMap(context.getTwilioClient(), context.SYNC_SVC_SID, callSid);
+  if (callSid != "12345") { 
+      //Create a sync map which will store all the persistent data for the call -- the map is keyed by a truncated callSID from the event
+    await sync.createSyncMap(client, context.SYNC_SVC_SID, callSid); //this is not great to nest within the test sid branch
+  } 
+
 
   if (hour >= 5 && hour < 12) {
       greeting = "Good morning"
@@ -21,7 +26,7 @@ exports.handler = async(context, event, callback) => {
   }
 
   //the status url might need to change if we decide to use mulitple envs for testing -- this is fine for now
-  twiml.play("https://scoria-6935-dev.twil.io/" + getRandomIntroSound())
+  twiml.play("https://scoria-6935-dev.twil.io/BIGSPACEDRONE_8K_MONO_LIMITED.wav")
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
@@ -31,9 +36,3 @@ exports.handler = async(context, event, callback) => {
   
   callback(null, twiml);
 };
-
-
-function getRandomIntroSound() {
-  let sound = ["BIGSPACEDRONE_8K_MONO_LIMITED.wav"]; //can add more here, but we like this one at the min.
-  return sound[Math.floor(Math.random() * sound.length)];
-}

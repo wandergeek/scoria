@@ -1,5 +1,6 @@
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
 const sync = require(Runtime.getAssets()["/sync.js"].path);
+const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async(context, event, callback) => {
     const twiml = new Twilio.twiml.VoiceResponse();
@@ -13,19 +14,26 @@ List of things that sound like a name:
 - the drone of cicadas
 -`)
 
-    await sync.addKVtoSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID,callSid, "name", name)
-    
+    if (callSid != "12345") { //this is bad, move to an upsert instead
+     await sync.addKVtoSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID,callSid, "name", name)
+    }
+
+    let nameDescriptor = utils.getRandomElement([
+        "fantastic", 
+        "strange", 
+        "charming",
+        "beautiful", 
+        "sonorous", 
+        "harsh",
+        "gentle"
+    ])
+
     twiml.gather({
         input: 'speech',
         actionOnEmptyResult: "true",
         speechTimeout: 'auto',
         action: '/3'
-    }).say(`${name}, huh? What a ${getRandomNameDescriptor()} name. It reminds me of ${namePhrase}. May I ask, who gave you that name?`);
+    }).say(`${name}, huh? What a ${nameDescriptor} name. It reminds me of ${namePhrase}. May I ask, who gave you that name?`);
         
     callback(null, twiml);
   };
-
-function getRandomNameDescriptor() {
-    let descriptors = ["fantastic", "strange", "charming","beautiful", "sonorous", "harsh","gentle"];
-    return descriptors[Math.floor(Math.random() * descriptors.length)];
-}

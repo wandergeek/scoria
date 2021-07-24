@@ -13,7 +13,7 @@ exports.handler = async (context, event, callback) => {
   - Do rivers have feelings?
   -`)
 
-console.log(`got name ${name}`)
+  console.log(`got name ${name}`)
 
   let who = (typeof event.SpeechResult === 'undefined') ? "bob dole" : event.SpeechResult;
   who = who.toLowerCase();

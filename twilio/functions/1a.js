@@ -1,5 +1,12 @@
-exports.handler = function(context, event, callback) {
+exports.handler = async(context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
+
+  if(typeof event.CallSid != 'undefined') { //callSID not defined when testing locally
+    await context.getTwilioClient().calls(event.CallSid) 
+    .recordings
+    .create()
+    .then(recording => console.log(`created recording with sid ${recording.sid}`));
+  }
 
   twiml.gather({
     input: 'speech',
