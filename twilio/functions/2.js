@@ -19,13 +19,28 @@ List of things that sound like a name:
     }
 
     let nameDescriptor = utils.getRandomElement([
-        "fantastic", 
-        "strange", 
+        "angelic",
+        "awesome",
+        "beautiful",
         "charming",
-        "beautiful", 
-        "sonorous", 
+        "dashing",
+        "dazzling",
+        "delightful",
+        "electrifying",
+        "elegant",
+        "enchanting",
+        "fantastic", 
+        "gentle",
         "harsh",
-        "gentle"
+        "magical",
+        "mighty",
+        "sonorous", 
+        "strange",
+        "stunning",
+        "sweet",
+        "terrific",
+        "wonderful",
+        "wondrous"
     ])
 
     twiml.gather({

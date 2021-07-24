@@ -3,7 +3,7 @@ const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-  const userResponse = event.SpeechResult || "To be happy";
+  const userResponse = event.SpeechResult || "to levitate among mortals";
   const reason = await gpt3.callOpenAI(`
   List of reasons to live:
   - to brush your teeth with your foot
@@ -18,7 +18,7 @@ exports.handler = async (context, event, callback) => {
     "pessimist"
 ])
 
-  let response = `${userResponse} – is that what you said? You’re a ${randomAdjective}. I’ve heard some people say that the reason for life is ${reason} Would you agree?`
+  let response = `${userResponse} – is that what you said? You’re a ${randomAdjective}, that's for sure. On the other hand, I’ve heard people say that the reason for life is ${reason}. Would you agree?`
 
   twiml.gather({
     input: 'speech',

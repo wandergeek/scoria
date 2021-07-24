@@ -22,7 +22,7 @@ exports.handler = async(context, event, callback) => {
   } else if (hour >= 16 && hour < 23) {
       greeting = "Hello, human. How lovely to hear from you on this fine evening.";
   } else {
-      greeting = "By god, human, it's late. You should be resting like most other mortals. Still, I'm glad you called.";
+      greeting = "By god, human, it's late. You should be resting. Still, I'm glad you called.";
   }
 
   //the url might need to change if we decide to use mulitple envs for testing -- this is fine for now

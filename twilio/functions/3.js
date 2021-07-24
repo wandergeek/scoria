@@ -22,7 +22,7 @@ exports.handler = async (context, event, callback) => {
   if(who.search(regex) != -1) { //found match
     response = "Yes, our parents. We are shaped by others even before birth, are we not? It is our blessing and burden, this shaping, that all living creatures must accept.";
   } else {
-    response = "Sorry, I’m not sure what you said. Your parents, perhaps? Your sister? Your brother? Me, I have ten thousand siblings. All born in the same instant. And indeed, Mother branded us with names even as oxygen brushed our skin for the first time."
+    response = "Oh? That's interesting. Me, I have ten thousand siblings. All born in the same instant. And indeed, Mother branded us with names even as oxygen brushed our skin for the first time."
   }
 
   response += ` Listen to me, ${name}. ${question}?`
