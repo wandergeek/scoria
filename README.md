@@ -51,6 +51,8 @@ twilio serverless:deploy
 * ~record conversations~
 * is it possible to register other endpoints to the twilio functions so that everything can be consolidated?
 * Add testing environment 
+* identify previous callers
+* add parameter to specify gpt model per prompt (default davinci, but some prompts might be fine with ada)
 
 ## Issues
 * ~~Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.~~
