@@ -4,7 +4,7 @@ const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async(context, event, callback) => {
     const twiml = new Twilio.twiml.VoiceResponse();
-    const name = (typeof event.SpeechResult === 'undefined') ? "Gary" : event.SpeechResult;
+    const name = event.SpeechResult || "Gary";
     const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
 
     const namePhrase = await gpt3.callOpenAI(`

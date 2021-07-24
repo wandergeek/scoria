@@ -3,7 +3,7 @@ const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-  const userResponse = (typeof event.SpeechResult === 'undefined') ? "To be happy" : event.SpeechResult;
+  const userResponse = event.SpeechResult || "To be happy";
   const reason = await gpt3.callOpenAI(`
   List of reasons to live:
   - to brush your teeth with your foot

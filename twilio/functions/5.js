@@ -4,7 +4,7 @@ exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
   const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
   const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name")
-  const userResponse = (typeof event.SpeechResult === 'undefined') ? "Yes, for sure." : event.SpeechResult;
+  const userResponse = event.SpeechResult || "Yes, for sure.";
   
   let response;
 
