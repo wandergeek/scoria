@@ -18,7 +18,7 @@ exports.handler = async (context, event, callback) => {
     "pessimist"
 ])
 
-  let response = `${userResponse} – is that what you said? You’re a ${randomAdjective}, that's for sure. On the other hand, I’ve heard people say that the reason for life is ${reason}. Would you agree?`
+  let response = `${userResponse}, eh? What a curious idea. You're a ${randomAdjective}, that's for sure. On the other hand, I've heard people say that the reason for life is ${reason}. What do you think about that?`
 
   twiml.gather({
     input: 'speech',

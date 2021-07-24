@@ -5,7 +5,7 @@ exports.handler = async (context, event, callback) => {
 
   const statement = await gpt3.callOpenAI(`
 List of questions about the future:
-- If trees don’t breathe, what is left?
+- If trees don't breathe, what is left?
 - If kangaroos were in your living room, would you turn away?
 -`)
 
@@ -15,6 +15,6 @@ List of mysterious farewell statements:
 - May you commune with the moss.
 -`)
 
-twiml.say(`That may be so, but ${statement}. And that’s all I have to say on the matter. ${farewell}.`)
+twiml.say(`That may be so, but ${statement}. And that's all I have to say on the matter. ${farewell}.`)
 callback(null, twiml);
 };

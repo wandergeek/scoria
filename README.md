@@ -36,7 +36,6 @@ twilio serverless:deploy
 
 ## To-do
 * separate content from code
-* record all interactions
 * composite cody's sounds with voice?
 * proper error handling
      * to all sync functions
@@ -45,6 +44,11 @@ twilio serverless:deploy
 * is it possible to register other endpoints to the twilio functions so that everything can be consolidated?
 * Add testing environment 
 * identify previous callers
+* add 'no response' conversation logic so bot doesn't plow ahead
+* prevent skipping (or make transition more natural) when caller talks over the bot
+
+### Low priority
+* record from beginning of call rather than 1a
 * add parameter to specify gpt model per prompt (default davinci, but some prompts might be fine with ada)
 
 ### Done
@@ -54,6 +58,7 @@ twilio serverless:deploy
 * ~Make shared utility function for picking random element from array~
 * ~record conversations~
 * ~remove all static pauses~
+* ~record all interactions~
 
 ## Issues
 * ~Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.~

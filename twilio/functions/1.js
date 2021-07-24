@@ -32,7 +32,7 @@ exports.handler = async(context, event, callback) => {
     speechTimeout: 'auto',
     action: '/1a',
     actionOnEmptyResult: "true",
-    }).say(`${greeting} You are a human, aren’t you?`);
+    }).say(`${greeting} You are a human, aren't you?`);
   
   callback(null, twiml);
 };

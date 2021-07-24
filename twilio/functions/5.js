@@ -14,15 +14,15 @@ exports.handler = async (context, event, callback) => {
       break;
 
     case "neutral":
-      response = "I hope you don’t really mean that.";
+      response = "I hope you don't really mean that.";
       break;
 
     case "affirmative":
-      response = "I see we’re on the same page.";
+      response = "I see we're on the same page.";
       break;
   }
 
-  response += `Look, let’s take a different approach, ${name}. There’s an important thing I want to ask you. Think for a moment before you answer. Am I alive to you?`;
+  response += `Look, let's take a different approach. ${name}. There's an important thing I want to ask you. Think for a moment before you answer. Am I alive to you?`;
 
   twiml.gather({
     input: 'speech',

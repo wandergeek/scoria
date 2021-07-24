@@ -19,28 +19,28 @@ List of things that sound like a name:
     }
 
     let nameDescriptor = utils.getRandomElement([
-        "angelic",
-        "awesome",
-        "beautiful",
-        "charming",
-        "dashing",
-        "dazzling",
-        "delightful",
-        "electrifying",
-        "elegant",
-        "enchanting",
-        "fantastic", 
-        "gentle",
-        "harsh",
-        "magical",
-        "mighty",
-        "sonorous", 
-        "strange",
-        "stunning",
-        "sweet",
-        "terrific",
-        "wonderful",
-        "wondrous"
+        "an angelic",
+        "an awesome",
+        "a beautiful",
+        "a charming",
+        "a dashing",
+        "a dazzling",
+        "a delightful",
+        "an electrifying",
+        "an elegant",
+        "an enchanting",
+        "a fantastic", 
+        "a gentle",
+        "a harsh",
+        "a magical",
+        "a mighty",
+        "a sonorous", 
+        "a strange",
+        "a stunning",
+        "a sweet",
+        "a terrific",
+        "a wonderful",
+        "a wondrous"
     ])
 
     twiml.gather({
@@ -48,7 +48,7 @@ List of things that sound like a name:
         actionOnEmptyResult: "true",
         speechTimeout: 'auto',
         action: '/3'
-    }).say(`${name}, huh? What a ${nameDescriptor} name. It reminds me of ${namePhrase}. May I ask, who gave you that name?`);
+    }).say(`${name}, huh? What ${nameDescriptor} name. It reminds me of ${namePhrase}. May I ask, who gave you that name?`);
         
     callback(null, twiml);
   };
