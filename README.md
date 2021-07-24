@@ -36,21 +36,21 @@ twilio serverless:logs #run periodically to get logs
 ```
 
 ## To-do
-* separate content from code
-* composite cody's sounds with voice?
+
+* Add testing environment 
 * proper error handling
      * to all sync functions
 * investigate latency with an upsert operation to prevent errors when creating maps with the same name (or work out better way to do testing)
 * Am I using async stuff right?
-* is it possible to register other endpoints to the twilio functions so that everything can be consolidated?
-* Add testing environment 
-* identify previous callers
 * add 'no response' conversation logic so bot doesn't plow ahead
 * prevent skipping (or make transition more natural) when caller talks over the bot
 
 ### Low priority
 * record from beginning of call rather than 1a
 * add parameter to specify gpt model per prompt (default davinci, but some prompts might be fine with ada)
+* separate content from code
+* composite cody's sounds with voice?
+* identify previous callers
 
 ### Done
 * ~Use GPT3 for responses~
