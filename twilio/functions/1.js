@@ -16,13 +16,13 @@ exports.handler = async(context, event, callback) => {
 
 
   if (hour >= 5 && hour < 12) {
-      greeting = "Good morning"
+      greeting = "Good morning, human. I'm pleased to hear from you."
   } else if (hour >= 12 && hour < 16) {
-      greeting = "Good afternoon";
+      greeting = "Good afternoon, human. I'm so glad you called me.";
   } else if (hour >= 16 && hour < 23) {
-      greeting = "Good evening";
+      greeting = "Hello, human. How lovely to hear from you on this fine evening.";
   } else {
-      greeting = "Fuck me its late";
+      greeting = "By god, human, it's late. You should be resting like most other mortals. Still, I'm glad you called.";
   }
 
   //the url might need to change if we decide to use mulitple envs for testing -- this is fine for now
@@ -32,7 +32,7 @@ exports.handler = async(context, event, callback) => {
     speechTimeout: 'auto',
     action: '/1a',
     actionOnEmptyResult: "true",
-    }).say(`${greeting}, human. I’m so glad you called me. You are a human, aren’t you?`);
+    }).say(`${greeting} You are a human, aren’t you?`);
   
   callback(null, twiml);
 };
