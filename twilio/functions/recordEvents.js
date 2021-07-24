@@ -6,7 +6,7 @@ exports.handler = async(context, event, callback) => {
     const headers = { headers: {'Content-Type': 'application/json'} };
     
     try {
-        const resp = await axios.post(context.DISCORD_WEBHOOK, message, headers);
+        const resp = await axios.post(context.DISCORD_RECORDING_WEBHOOK, message, headers);
         console.log(resp.data);
     } catch (err) {
         console.error(err);

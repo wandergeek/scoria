@@ -32,6 +32,7 @@ curl http://localhost:3000/1 # example command
 ```
 cd twilio
 twilio serverless:deploy
+twilio serverless:logs #run periodically to get logs
 ```
 
 ## To-do
@@ -59,9 +60,6 @@ twilio serverless:deploy
 * ~record conversations~
 * ~remove all static pauses~
 * ~record all interactions~
-
-## Issues
-* ~Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.~
 
 ## Reference
 https://www.twilio.com/docs/runtime/functions-assets-api/quickstart
