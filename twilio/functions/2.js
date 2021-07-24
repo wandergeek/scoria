@@ -3,7 +3,7 @@ const sync = require(Runtime.getAssets()["/sync.js"].path);
 
 exports.handler = async(context, event, callback) => {
     const twiml = new Twilio.twiml.VoiceResponse();
-    const name = (typeof event.SpeechResult === 'undefined') ? "gary" : event.SpeechResult;
+    const name = (typeof event.SpeechResult === 'undefined') ? "Gary" : event.SpeechResult;
     const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
 
     const namePhrase = await gpt3.callOpenAI(`

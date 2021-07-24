@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "moment-timezone": "^0.5.33",
+    "sentiment": "^5.0.2",
     "twilio": "^3.56"
   },
   "devDependencies": {
