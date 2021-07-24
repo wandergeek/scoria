@@ -47,6 +47,8 @@ twilio serverless:deploy
      * to all sync functions
 * investigate latency with an upsert operation to prevent errors when creating maps with the same name (or work out better way to do testing)
 * Am I using async stuff right?
+* Make shared utility function for picking random element from array
+* record conversations
 
 ## Issues
 * Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.
