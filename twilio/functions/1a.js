@@ -4,7 +4,9 @@ exports.handler = async(context, event, callback) => {
   if(typeof event.CallSid != 'undefined') { //callSID not defined when testing locally
     await context.getTwilioClient().calls(event.CallSid) 
     .recordings
-    .create()
+    .create({
+      recordingStatusCallback: `https://${context.DOMAIN_NAME}/recordEvents`
+    })
     .then(recording => console.log(`created recording with sid ${recording.sid}`));
   }
 

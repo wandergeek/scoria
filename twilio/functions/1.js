@@ -25,8 +25,8 @@ exports.handler = async(context, event, callback) => {
       greeting = "Fuck me its late";
   }
 
-  //the status url might need to change if we decide to use mulitple envs for testing -- this is fine for now
-  twiml.play("https://scoria-6935-dev.twil.io/BIGSPACEDRONE_8K_MONO_LIMITED.wav")
+  //the url might need to change if we decide to use mulitple envs for testing -- this is fine for now
+  twiml.play(`https://${context.DOMAIN_NAME}/BIGSPACEDRONE_8K_MONO_LIMITED.wav`)
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
