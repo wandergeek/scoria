@@ -49,8 +49,9 @@ twilio serverless:deploy
 * Am I using async stuff right?
 * Make shared utility function for picking random element from array
 * record conversations
+* is it possible to register other endpoints to the twilio functions so that everything can be consolidated?
 
 ## Issues
-* Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.
+* ~~Most endpoints will not work locally since it requires an event argument. Will need to work out a way to inject these events.~~
 
 Reference: https://www.twilio.com/docs/runtime/functions-assets-api/quickstart
