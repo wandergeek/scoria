@@ -44,6 +44,10 @@ twilio serverless:logs #run periodically to get logs
 * Am I using async stuff right?
 * add 'no response' conversation logic so bot doesn't plow ahead
 * prevent skipping (or make transition more natural) when caller talks over the bot
+* add metrics for 
+    * length of call
+    * total words detected
+
 
 ### Low priority
 * record from beginning of call rather than 1a
