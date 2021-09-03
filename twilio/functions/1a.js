@@ -17,5 +17,6 @@ exports.handler = async(context, event, callback) => {
     actionOnEmptyResult: "true",
     }).say(`Silly question, I know. Of course you're a human. What other creature could dial this number? I believe we've met before, but I didn't get a chance to introduce myself. My name is Scoria. What's your name?`);
   
+//can't really do much here if they don't respond?
   callback(null, twiml);
 };

@@ -25,14 +25,20 @@ exports.handler = async(context, event, callback) => {
       greeting = "By god, human, it's late. You should be resting. Still, I'm glad you called.";
   }
 
-  //the url might need to change if we decide to use mulitple envs for testing -- this is fine for now
-  twiml.play(`https://${context.DOMAIN_NAME}/BIGSPACEDRONE_8K_MONO_LIMITED.wav`)
+  twiml.play(`https://${context.DOMAIN_NAME}/intro.wav`)
+  twiml.say(`${greeting} You are a human, aren't you?`);
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
-    action: '/1a',
-    actionOnEmptyResult: "true",
-    }).say(`${greeting} You are a human, aren't you?`);
+    action: '/1a?responded=true',
+    });
   
+    twiml.say(`That's ok, you don't have to answer. Apologies if I've offended you. My sensibilities have shifted tectonically over the millenia.`);
+    twiml.pause(0.5);
+    twiml.redirect({
+      method: 'POST'
+  }, '/1a?responded=false');
+  
+
   callback(null, twiml);
 };

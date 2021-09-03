@@ -45,10 +45,13 @@ List of things that sound like a name:
 
     twiml.gather({
         input: 'speech',
-        actionOnEmptyResult: "true",
         speechTimeout: 'auto',
-        action: '/3'
+        action: '/3?responded=true'
     }).say(`${name}, huh? What ${nameDescriptor} name. It reminds me of ${namePhrase}. May I ask, who gave you that name?`);
         
+    twiml.say("That's ok. You don't have to answer.") //improve
+    twiml.redirect({
+        method: 'POST'
+    }, '/3?responded=false');
     callback(null, twiml);
   };

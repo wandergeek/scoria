@@ -6,30 +6,39 @@ exports.handler = async (context, event, callback) => {
   const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name")
   const userResponse = event.SpeechResult || "Yes, for sure.";
   
-  let response;
+  let response = "";
 
-  switch (checkSentiment(userResponse)) {
-    case "negative":
-      response = "How awful of you to say.";
-      break;
-
-    case "neutral":
-      response = "I hope you don't really mean that.";
-      break;
-
-    case "affirmative":
-      response = "I see we're on the same page.";
-      break;
+  if(event.responded == "true") {
+    switch (checkSentiment(userResponse)) {
+      case "negative":
+        response = "How awful of you to say.";
+        break;
+  
+      case "neutral":
+        response = "I hope you don't really mean that.";
+        break;
+  
+      case "affirmative":
+        response = "I see we're on the same page.";
+        break;
+    }
   }
 
-  response += `Look, let's take a different approach. ${name}. There's an important thing I want to ask you. Think for a moment before you answer. Am I alive to you?`;
+  response += `Look, let's take a different approach, ${name}. There's an important thing I want to ask you. Think for a moment before you answer...`; 
+  twiml.say(response);
+  twiml.pause(0.5);
+  twiml.say(`Am I alive to you?`); 
 
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
-    action: '/6',
-    actionOnEmptyResult: "true"
-}).say(response);
+    action: '/6?responded=true',
+});
+
+twiml.say("Don't be embarassed. You can be truthful and speak with me, for there is nothing in this world that I haven't experienced. Anyway, ")
+twiml.redirect({
+    method: 'POST'
+}, '/6?responded=false');
 
   callback(null, twiml);
 };

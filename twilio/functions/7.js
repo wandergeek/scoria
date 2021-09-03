@@ -15,6 +15,16 @@ List of mysterious farewell statements:
 - May you commune with the moss.
 -`)
 
-twiml.say(`That may be so, but ${statement}. And that's all I have to say on the matter. ${farewell}.`)
+let response = "";
+if(event.responded == "true") {
+  response = "That may be so, but ";
+} else {
+  response = "That's fine if you don't want to chat , , . Regardless, ";
+}
+
+response += `${statement} , , ,. I will leave you that to ponder, , , . ${farewell}.`;
+
+twiml.say(response)
+twiml.play(`https://${context.DOMAIN_NAME}/outro.wav`)
 callback(null, twiml);
 };
