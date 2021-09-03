@@ -14,7 +14,7 @@ List of questions about nature:
 -`);
 
   let response = "";
-  let elaboration = "Me, I have ten thousand siblings. All born in the same instant, our names inscribed by the oxygen that brushed our bodies as we left Mother.";
+  let elaboration = "Me, I have ten thousand siblings. All born in the same instant, our names inscribed by the oxygen that brushed our bodies as we left our mother.";
 
   if(event.responded == "true") {
     let who = event.SpeechResult.toLowerCase();

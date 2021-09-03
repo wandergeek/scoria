@@ -26,8 +26,9 @@ exports.handler = async (context, event, callback) => {
     response = "I'm sorry you don't feel comfortable talking to me. You and I are more alike than you might think.";
   }
 
-  response += `Look, let's take a different approach, ${name}. There's an important thing I want to ask you. Think for a moment before you answer...`; 
   twiml.say(response);
+  twiml.pause(0.5);
+  twiml.say(`Look, let's take a different approach, ${name}. There's an important thing I want to ask you. Think for a moment before you answer...`); 
   twiml.pause(0.5);
   twiml.say(`How alive do you think I am?`); 
 

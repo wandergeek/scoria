@@ -22,9 +22,13 @@ List of mysterious farewell statements:
     response = "If you don't want to chat, fine. , , . Regardless, ";
   }
 
-  response += `${statement} , , ,. I will leave you that to ponder, , , . ${farewell}.`;
+  response += `${statement}`;
 
   twiml.say(response)
+  twiml.pause(0.5);
+  twiml.say(`I will leave you that to ponder.`); 
+  twiml.pause(0.5);
+  twiml.say(`${farewell}`); 
   twiml.pause(0.5);
   twiml.play(`https://${context.DOMAIN_NAME}/outro.wav`)
   callback(null, twiml);

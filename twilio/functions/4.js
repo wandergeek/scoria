@@ -22,7 +22,7 @@ List of reasons to live:
   ]);
     response = `${userResponse}, eh? What a curious idea. You're a ${randomAdjective}, that's for sure.`;
   } else { //didn't respond to previous prompt
-    response = `No opinion about the natural world? How strange, given that you are a product of it.`;
+    response = `No opinion about the natural world? How strange, given that you're a product of it.`;
   }
 
   twiml.say(response)

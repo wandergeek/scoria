@@ -33,8 +33,9 @@ List of living things:
   }
 
   twiml.say(response);
-  twiml.say(`After all, you must be a human. ${creatures} can't speak. Not in your strange tongue, anyhow.`)
-  twiml.pause(0.5);
+  twiml.pause(0.2);
+  twiml.say(`After all, you must be a human. ${creatures} can't speak. Not in your strange tongue.`)
+  twiml.pause(0.2);
 
   let filler = utils.getRandomElement([
     "Hey, but I haven't even introduced myself properly.",
@@ -43,7 +44,7 @@ List of living things:
   ]);
 
   twiml.say(`${filler} My name is Scoria.`);
-  twiml.pause(0.5);
+  twiml.pause(0.2);
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',

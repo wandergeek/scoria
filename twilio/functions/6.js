@@ -11,9 +11,11 @@ Rock: Do I not move over the millennia?
 Human: ${userResponse}
 Rock:`)
 
-  twiml.say(`${argument} , , ,. That's what I think.`)
+  twiml.say(`${argument}`)
   twiml.pause(0.5);
-  twiml.say(`Have you any thoughts about that?`);
+  twiml.say(`That's what I think.`); 
+  twiml.pause(0.5);
+  twiml.say(`Got any thoughts about that?`);
 
   twiml.gather({
     input: 'speech',
