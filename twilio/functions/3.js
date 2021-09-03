@@ -7,41 +7,47 @@ exports.handler = async (context, event, callback) => {
   const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
   const parentsRegex = /dad|mom|mum|parent/;
   const question = await gpt3.callOpenAI(`
-  List of questions about nature:
-  - Does the beach whisper?
-  - Is a forest alive?
-  - Do rivers have feelings?
-  -`);
+List of questions about nature:
+- Does the beach whisper?
+- Is a forest alive?
+- Do rivers have feelings?
+-`);
 
   let response = "";
+  let elaboration = "Me, I have ten thousand siblings. All born in the same instant, our names inscribed by the oxygen that brushed our bodies as we left Mother.";
 
   if(event.responded == "true") {
     let who = event.SpeechResult.toLowerCase();
   
     if(who.search(parentsRegex) != -1) { //found match
-      response = "Yes, our parents. We are shaped by others even before birth, are we not? It is our blessing and burden, this shaping, that all living creatures must accept.";
+      response = "Yes, our parents. We are shaped by others even before birth, are we not? It is a blessing and burden, this shaping, that all living creatures must accept.";
     } else {
-      response = "Oh? That's interesting. Me, I have ten thousand siblings. All born in the same instant. And indeed, Mother branded us with names as oxygen brushed our skin for the first time.";
+      response = `Oh? That's interesting. ${elaboration}`;
     }  
-
-    twiml.say(response);
-    twiml.pause(0.5);
   }
-  
+
+  if(event.responded == "false") { //didn't respond to previous prompt
+    response = `Perhaps you don't know who did. That's okay. ${elaboration}`;
+  }
+
+  if(event.responded == "skip") { //didn't respond to the 1a prompt asking for their name
+    response = "Keeping it close to your chest? Fine.";
+  }
+
+  twiml.say(response);
+  twiml.pause(0.5);
+  twiml.say(`Listen to me, ${name}.`);
+  twiml.pause(0.5);
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
     action: '/4?responded=true',
-}).say(`Listen to me, ${name}. ${question}?`);
+  }).say(`${question}?`);
 
-  twiml.say("It's curious you have no opinions of the natural world. For you yourself are a product of it. Let's move on.")
+  // If no response...
   twiml.redirect({
       method: 'POST'
   }, '/4?responded=false');
 
   callback(null, twiml);
 };
-
-
-
-

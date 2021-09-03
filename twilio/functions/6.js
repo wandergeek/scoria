@@ -11,17 +11,16 @@ Rock: Do I not move over the millennia?
 Human: ${userResponse}
 Rock:`)
 
-twiml.say(`${argument} , , ,. That's what I think.`)
-twiml.pause(0.5);
-twiml.say(`What's your philosophy?`); //this is a weird segue
+  twiml.say(`${argument} , , ,. That's what I think.`)
+  twiml.pause(0.5);
+  twiml.say(`Have you any thoughts about that?`);
 
-twiml.gather({
-  input: 'speech',
-  speechTimeout: 'auto',
-  action: '/7?responded=true',
-  actionOnEmptyResult: "true"
-}); 
+  twiml.gather({
+    input: 'speech',
+    speechTimeout: 'auto',
+    action: '/7?responded=true',
+    actionOnEmptyResult: "true"
+  }); 
 
-
-callback(null, twiml);
+  callback(null, twiml);
 };

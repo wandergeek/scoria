@@ -1,3 +1,6 @@
+const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
+const utils = require(Runtime.getAssets()["/utils.js"].path);
+
 exports.handler = async(context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
 
@@ -10,13 +13,48 @@ exports.handler = async(context, event, callback) => {
     .then(recording => console.log(`created recording with sid ${recording.sid}`));
   }
 
+  const creatures = await gpt3.callOpenAI(`
+List of living things:
+- Lizards and clouds
+- Crows and wattle trees
+- Creeks and caterpillars
+-`)
+
+  if(event.responded == "true") {
+    let adjective = utils.getRandomElement([
+      "Silly",
+      "Odd",
+      "Strange",
+      "Awkward"
+    ]);
+    response = `${adjective} question, I know.`;
+  } else { //didn't respond to previous prompt
+    response = `No need to answer.`;
+  }
+
+  twiml.say(response);
+  twiml.say(`After all, you must be a human. ${creatures} can't speak. Not in your strange tongue, anyhow.`)
+  twiml.pause(0.5);
+
+  let filler = utils.getRandomElement([
+    "Hey, but I haven't even introduced myself properly.",
+    "I think we've seen each other before, but I don't know your name.",
+    "I believe we've met before, but not introduced ourselves."
+  ]);
+
+  twiml.say(`${filler} My name is Scoria.`);
+  twiml.pause(0.5);
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
     action: '/2',
     actionOnEmptyResult: "true",
-    }).say(`Silly question, I know. Of course you're a human. What other creature could dial this number? I believe we've met before, but I didn't get a chance to introduce myself. My name is Scoria. What's your name?`);
-  
-//can't really do much here if they don't respond?
+    }).say(`What's yours?`);
+
+  // If no response, skip the whole name beat.
+  twiml.redirect({
+    method: 'POST'
+  }, '/3?responded=skip');
+
   callback(null, twiml);
 };

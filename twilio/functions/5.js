@@ -22,23 +22,26 @@ exports.handler = async (context, event, callback) => {
         response = "I see we're on the same page.";
         break;
     }
+  } else { //didn't respond to previous prompt
+    response = "I'm sorry you don't feel comfortable talking to me. You and I are more alike than you might think.";
   }
 
   response += `Look, let's take a different approach, ${name}. There's an important thing I want to ask you. Think for a moment before you answer...`; 
   twiml.say(response);
   twiml.pause(0.5);
-  twiml.say(`Am I alive to you?`); 
+  twiml.say(`How alive do you think I am?`); 
 
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
     action: '/6?responded=true',
-});
+  });
 
-twiml.say("Don't be embarassed. You can be truthful and speak with me, for there is nothing in this world that I haven't experienced. Anyway, ")
-twiml.redirect({
+  // If no response...
+  twiml.say("Don't be embarrassed. You can be truthful with me. I've been privy to every conversation you can imagine.")
+  twiml.redirect({
     method: 'POST'
-}, '/6?responded=false');
+  }, '/6?responded=false');
 
   callback(null, twiml);
 };

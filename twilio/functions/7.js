@@ -15,16 +15,17 @@ List of mysterious farewell statements:
 - May you commune with the moss.
 -`)
 
-let response = "";
-if(event.responded == "true") {
-  response = "That may be so, but ";
-} else {
-  response = "That's fine if you don't want to chat , , . Regardless, ";
-}
+  let response = "";
+  if(event.responded == "true") {
+    response = "That may be so, but ";
+  } else { //didn't respond to previous prompt
+    response = "If you don't want to chat, fine. , , . Regardless, ";
+  }
 
-response += `${statement} , , ,. I will leave you that to ponder, , , . ${farewell}.`;
+  response += `${statement} , , ,. I will leave you that to ponder, , , . ${farewell}.`;
 
-twiml.say(response)
-twiml.play(`https://${context.DOMAIN_NAME}/outro.wav`)
-callback(null, twiml);
+  twiml.say(response)
+  twiml.pause(0.5);
+  twiml.play(`https://${context.DOMAIN_NAME}/outro.wav`)
+  callback(null, twiml);
 };
