@@ -1,37 +1,35 @@
-const sync = require(Runtime.getAssets()["/sync.js"].path);
+const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
+const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-  const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
-  const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name")
-  const userResponse = event.SpeechResult || "Yes, for sure.";
-  
+  const userResponse = event.SpeechResult || "to levitate among mortals";
+  const reason = await gpt3.callOpenAI(`
+List of reasons to live:
+- to brush your teeth with your foot
+- to connect with animals  
+- ${userResponse}
+-`);
+
   let response = "";
 
   if(event.responded == "true") {
-    switch (checkSentiment(userResponse)) {
-      case "negative":
-        response = "How awful of you to say.";
-        break;
-  
-      case "neutral":
-        response = "I hope you don't really mean that.";
-        break;
-  
-      case "affirmative":
-        response = "I see we're on the same page.";
-        break;
-    }
+    let description = utils.getRandomElement([
+      "a charming",
+      "an imaginative",
+      "a romantic",
+      "a pessimistic"
+  ]);
+    response = `${userResponse}, eh? What a curious idea. You're ${description} human, that's for sure.`;
   } else { //didn't respond to previous prompt
-    response = "I'm sorry you don't feel comfortable talking to me. You and I are more alike than you might think.";
+    response = `No opinion about the natural world? How strange. You're part of it, after all.`;
   }
 
-  twiml.say(response);
+  twiml.say(response)
   twiml.pause(0.5);
-  twiml.say(`Look, let's take a different approach, ${name}. There's an important thing I want to ask you. Think for a moment before you answer...`); 
+  twiml.say(`Humour me by answering another question. Some people say the best use of a day is ${reason}.`)
   twiml.pause(0.5);
-  twiml.say(`How alive do you think I am?`); 
-
+  twiml.say(`What do you reckon?`)
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
@@ -39,28 +37,9 @@ exports.handler = async (context, event, callback) => {
   });
 
   // If no response...
-  twiml.say("Don't be embarrassed. You can be truthful with me. I've been privy to every conversation you can imagine.")
   twiml.redirect({
     method: 'POST'
   }, '/6?responded=false');
 
   callback(null, twiml);
 };
-
-//returns string "affirmative", "negative", or "neutral" depending on sentiment of input. 
-function checkSentiment(input) {
-  const threshold = 0.5; //sentiment ranked scale +-5
-  var Sentiment = require('sentiment');
-  var sentiment = new Sentiment();
-  var analysis = sentiment.analyze(input);
-
-  if(analysis.comparative < -threshold) {
-    ret = "negative";
-  } else if(analysis.comparative >= -threshold && analysis.comparative < threshold) {
-    ret = "neutral";
-  } else if(analysis.comparative >= threshold ) {
-    ret = "affirmative";
-  }
-
-  return ret;
-}

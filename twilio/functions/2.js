@@ -1,60 +1,60 @@
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
-const sync = require(Runtime.getAssets()["/sync.js"].path);
 const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async(context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-  const name = event.SpeechResult || "Gary";
-  const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
 
-  const namePhrase = await gpt3.callOpenAI(`
-List of things that sound like a name:
-- a tiger's roar
-- a violin being tuned
-- the drone of cicadas
--`)
-
-  if (callSid != "12345") { //this is bad, move to an upsert instead
-   await sync.addKVtoSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID,callSid, "name", name)
+  if(typeof event.CallSid != 'undefined') { //callSID not defined when testing locally
+    await context.getTwilioClient().calls(event.CallSid) 
+    .recordings
+    .create({
+      recordingStatusCallback: `https://${context.DOMAIN_NAME}/recordEvents`
+    })
+    .then(recording => console.log(`created recording with sid ${recording.sid}`));
   }
 
-  let nameDescriptor = utils.getRandomElement([
-    "an angelic",
-    "an awesome",
-    "a beautiful",
-    "a charming",
-    "a dashing",
-    "a dazzling",
-    "a delightful",
-    "an electrifying",
-    "an elegant",
-    "an enchanting",
-    "a fantastic", 
-    "a gentle",
-    "a harsh",
-    "a magical",
-    "a mighty",
-    "a sonorous", 
-    "a strange",
-    "a stunning",
-    "a sweet",
-    "a terrific",
-    "a wonderful",
-    "a wondrous"
+  const creatures = await gpt3.callOpenAI(`
+List of living things:
+- Lizards and clouds
+- Crows and wattle trees
+- Creeks and caterpillars
+-`)
+
+  if(event.responded == "true") {
+    let adjective = utils.getRandomElement([
+      "Silly",
+      "Odd",
+      "Strange",
+      "Awkward"
+    ]);
+    response = `${adjective} question, I know.`;
+  } else { //didn't respond to previous prompt
+    response = `No need to answer.`;
+  }
+
+  twiml.say(response);
+  twiml.pause(0.2);
+  twiml.say(`After all, you must be a human. ${creatures} can't speak. Not in your strange tongue anyway.`)
+  twiml.pause(0.2);
+
+  let filler = utils.getRandomElement([
+    "Hey, but I haven't even introduced myself properly.",
+    "I think we've seen each other before, but I don't know your name.",
+    "I believe we've met before, but not introduced ourselves."
   ]);
 
-  twiml.say(`${name}, huh? What ${nameDescriptor} name. It reminds me of ${namePhrase}.`)
-  twiml.pause(0.5);
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
-    action: '/3?responded=true'
-  }).say(`May I ask, who gave you that name?`);
+    timeout: '6', //excessive value to test whether this attribute allows for slow replies w/o introducing delay for quick replies
+    action: '/3',
+    actionOnEmptyResult: "true",
+    }).say(`${filler} My name is Scoria. What's yours?`);
 
-  // If no response...
+  // If no response, skip the whole name beat.
   twiml.redirect({
     method: 'POST'
-  }, '/3?responded=false');
+  }, '/4?responded=skip');
 
   callback(null, twiml);
 };

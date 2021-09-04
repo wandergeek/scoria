@@ -1,35 +1,31 @@
+const sync = require(Runtime.getAssets()["/sync.js"].path);
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
+  const userResponse = event.SpeechResult || "The garden";
+  const proverb = await gpt3.callOpenAI(`
+Proverbs about the natural world:
+- Home is where the dirt is softest.
+- Outside is the place where the sun can see.
+- ${userResponse}`);
 
-  const statement = await gpt3.callOpenAI(`
-List of questions about the future:
-- If trees don't breathe, what is left?
-- If kangaroos were in your living room, would you turn away?
--`)
-
-  const farewell = await gpt3.callOpenAI(`
-List of mysterious farewell statements:
-- I will melt into the earth.
-- May you commune with the moss.
--`)
-
-  let response = "";
-  if(event.responded == "true") {
-    response = "That may be so, but ";
-  } else { //didn't respond to previous prompt
-    response = "If you don't want to chat, fine. , , . Regardless, ";
-  }
-
-  response += `${statement}`;
-
-  twiml.say(response)
+  twiml.say(`Well, you know what they say: ${proverb}`);
   twiml.pause(0.5);
-  twiml.say(`I will leave you that to ponder.`); 
+  twiml.say(`But I digress. There's something I want to ask you. A question close to my igneous heart.`); 
   twiml.pause(0.5);
-  twiml.say(`${farewell}`); 
-  twiml.pause(0.5);
-  twiml.play(`https://${context.DOMAIN_NAME}/outro.wav`)
+  twiml.say(`How alive do you think I am?`); 
+
+  twiml.gather({
+    input: 'speech',
+    speechTimeout: 'auto',
+    action: '/8?responded=true',
+  });
+
+  // If no response...
+  twiml.redirect({
+    method: 'POST'
+  }, '/8?responded=false');
+
   callback(null, twiml);
 };

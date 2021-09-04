@@ -1,28 +1,48 @@
 const sync = require(Runtime.getAssets()["/sync.js"].path);
-const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
+const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-  const userResponse = event.SpeechResult || "You operate on an entirely alien time scale.";
-  const argument = await gpt3.callOpenAI(`
-A rock convinces a human that it deserves to be treated as a person.
-Human: I don't know if you're really alive.
-Rock: Do I not move over the millennia?
-Human: ${userResponse}
-Rock:`)
+  const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
+  const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name")
+  const userResponse = event.SpeechResult || "Yes, for sure.";
+  
+  let response = "";
 
-  twiml.say(`${argument}`)
-  twiml.pause(0.5);
-  twiml.say(`That's what I think.`); 
-  twiml.pause(0.5);
-  twiml.say(`Got any thoughts about that?`);
+  if(event.responded == "true") {
+    switch (utils.checkSentiment(userResponse)) {
+      case "negative":
+        response = "How unfortunate.";
+        break;
+  
+      case "neutral":
+        response = "Fair enough.";
+        break;
+  
+      case "affirmative":
+        response = "I see we're on the same page.";
+        break;
+    }
+  } else { //didn't respond to previous prompt
+    response = "I'm sorry you don't feel comfortable talking to me. You and I are more alike than you might think.";
+  }
+
+  twiml.say(response);
+  twiml.pause(0.3);
+  twiml.say(`${name}, you know I come from the earth.`); 
+  twiml.pause(0.3);
+  twiml.say(`Where are you at the moment?`); 
 
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
     action: '/7?responded=true',
-    actionOnEmptyResult: "true"
-  }); 
+  });
+
+  // If no response...
+  twiml.redirect({
+    method: 'POST'
+  }, '/7?responded=false');
 
   callback(null, twiml);
 };

@@ -1,44 +1,52 @@
+const sync = require(Runtime.getAssets()["/sync.js"].path);
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
-const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-  const userResponse = event.SpeechResult || "to levitate among mortals";
-  const reason = await gpt3.callOpenAI(`
-List of reasons to live:
-- to brush your teeth with your foot
-- to connect with animals  
-- ${userResponse}
--`)
+  const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
+  const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
+  const parentsRegex = /dad|mom|mum|parent/;
+  const question = await gpt3.callOpenAI(`
+List of questions about nature:
+- Does the beach whisper?
+- Is a forest alive?
+- Do rivers have feelings?
+-`);
 
   let response = "";
+  let elaboration = "Me, I have ten thousand siblings, all born in the same instant. Our names inscribed by the oxygen that brushed our bodies as we left our mother.";
 
   if(event.responded == "true") {
-    let randomAdjective = utils.getRandomElement([
-      "charmer",
-      "kook",
-      "romantic",
-      "pessimist"
-  ]);
-    response = `${userResponse}, eh? What a curious idea. You're a ${randomAdjective}, that's for sure.`;
-  } else { //didn't respond to previous prompt
-    response = `No opinion about the natural world? How strange, given that you're a product of it.`;
+    let who = event.SpeechResult.toLowerCase();
+  
+    if(who.search(parentsRegex) != -1) { //found match
+      response = "Yes, our parents. We are shaped by others even before birth, are we not? It is a blessing and burden, this shaping, that all living creatures must accept.";
+    } else {
+      response = `Oh? That's interesting. ${elaboration}`;
+    }  
   }
 
-  twiml.say(response)
+  if(event.responded == "false") { //didn't respond to previous prompt
+    response = `Perhaps you don't know who did. That's okay. ${elaboration}`;
+  }
+
+  if(event.responded == "skip") { //didn't respond to the 1a prompt asking for their name
+    response = "Keeping it close to your chest? Fine.";
+  }
+
+  twiml.say(response);
   twiml.pause(0.5);
-  twiml.say(`Humour me. I have another question. Some people say the best use of a day is ${reason}.`)
+  twiml.say(`Listen to me, ${name}.`);
   twiml.pause(0.5);
-  twiml.say(`What do you reckon?`)
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
     action: '/5?responded=true',
-  });
+  }).say(`${question}?`);
 
   // If no response...
   twiml.redirect({
-    method: 'POST'
+      method: 'POST'
   }, '/5?responded=false');
 
   callback(null, twiml);

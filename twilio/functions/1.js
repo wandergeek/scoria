@@ -37,19 +37,19 @@ exports.handler = async(context, event, callback) => {
   twiml.play(`https://${context.DOMAIN_NAME}/intro.wav`)
   twiml.pause(0.5);
   twiml.say(`${greeting} ${platitude}`);
-  twiml.pause(0.5);
+  twiml.pause(0.3);
   twiml.say(`You are a human, aren't you?`);
 
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
-    action: '/1a?responded=true',
+    action: '/2?responded=true',
   });
   
   // If no response from the caller...
   twiml.redirect({
     method: 'POST'
-    }, '/1a?responded=false');
+    }, '/2?responded=false');
 
   callback(null, twiml);
 };

@@ -1,52 +1,59 @@
-const sync = require(Runtime.getAssets()["/sync.js"].path);
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
+const sync = require(Runtime.getAssets()["/sync.js"].path);
+const utils = require(Runtime.getAssets()["/utils.js"].path);
 
-exports.handler = async (context, event, callback) => {
+exports.handler = async(context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
+  const name = event.SpeechResult || "Gary";
   const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
-  const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
-  const parentsRegex = /dad|mom|mum|parent/;
-  const question = await gpt3.callOpenAI(`
-List of questions about nature:
-- Does the beach whisper?
-- Is a forest alive?
-- Do rivers have feelings?
--`);
 
-  let response = "";
-  let elaboration = "Me, I have ten thousand siblings. All born in the same instant, our names inscribed by the oxygen that brushed our bodies as we left our mother.";
+  const namePhrase = await gpt3.callOpenAI(`
+List of things that sound like a name:
+- a tiger's roar
+- a violin being tuned
+- the drone of cicadas
+-`)
 
-  if(event.responded == "true") {
-    let who = event.SpeechResult.toLowerCase();
-  
-    if(who.search(parentsRegex) != -1) { //found match
-      response = "Yes, our parents. We are shaped by others even before birth, are we not? It is a blessing and burden, this shaping, that all living creatures must accept.";
-    } else {
-      response = `Oh? That's interesting. ${elaboration}`;
-    }  
+  if (callSid != "12345") { //this is bad, move to an upsert instead
+   await sync.addKVtoSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID,callSid, "name", name)
   }
 
-  if(event.responded == "false") { //didn't respond to previous prompt
-    response = `Perhaps you don't know who did. That's okay. ${elaboration}`;
-  }
+  let nameDescriptor = utils.getRandomElement([
+    "an angelic",
+    "an awesome",
+    "a beautiful",
+    "a charming",
+    "a dashing",
+    "a dazzling",
+    "a delightful",
+    "an electrifying",
+    "an elegant",
+    "an enchanting",
+    "a fantastic", 
+    "a gentle",
+    "a harsh",
+    "a magical",
+    "a mighty",
+    "a sonorous", 
+    "a strange",
+    "a stunning",
+    "a sweet",
+    "a terrific",
+    "a wonderful",
+    "a wondrous"
+  ]);
 
-  if(event.responded == "skip") { //didn't respond to the 1a prompt asking for their name
-    response = "Keeping it close to your chest? Fine.";
-  }
-
-  twiml.say(response);
-  twiml.pause(0.5);
-  twiml.say(`Listen to me, ${name}.`);
+  twiml.say(`${name}, huh? What ${nameDescriptor} name. It reminds me of ${namePhrase}.`)
   twiml.pause(0.5);
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
-    action: '/4?responded=true',
-  }).say(`${question}?`);
+    action: '/4?responded=true'
+  }).say(`May I ask, who gave you that name?`);
 
   // If no response...
   twiml.redirect({
-      method: 'POST'
+    method: 'POST'
   }, '/4?responded=false');
 
   callback(null, twiml);
