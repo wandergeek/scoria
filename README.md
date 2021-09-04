@@ -44,7 +44,6 @@ twilio serverless:logs # run periodically to get logs
 * check whether async stuff is being used correctly
 * prevent skipping (or make transition more natural) when caller talks over the bot
 * add metrics for 
-    * length of call
     * total words detected
 
 ### Low priority
@@ -64,6 +63,7 @@ twilio serverless:logs # run periodically to get logs
 * ~remove all static pauses~
 * ~record all interactions~
 * ~add 'no response' conversation logic so bot doesn't plow ahead~
+* ~metrics: length of call~
 
 ## Reference
 https://www.twilio.com/docs/runtime/functions-assets-api/quickstart
