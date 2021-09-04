@@ -29,7 +29,7 @@ List of reasons to live:
   twiml.pause(0.5);
   twiml.say(`Humour me by answering another question. Some people say the best use of a day is ${reason}.`)
   twiml.pause(0.5);
-  twiml.say(`What do you reckon?`)
+  twiml.say(`What do you think?`)
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',

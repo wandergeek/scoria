@@ -4,33 +4,35 @@ const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
   const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10);
-  const name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
-  const parentsRegex = /dad|mom|mum|parent/;
   const question = await gpt3.callOpenAI(`
 List of questions about nature:
 - Does the beach whisper?
 - Is a forest alive?
 - Do rivers have feelings?
 -`);
-
+  
+  let name = "";
   let response = "";
   let elaboration = "Me, I have ten thousand siblings, all born in the same instant. Our names inscribed by the oxygen that brushed our bodies as we left our mother.";
 
   if(event.responded == "true") {
     let who = event.SpeechResult.toLowerCase();
-  
-    if(who.search(parentsRegex) != -1) { //found match
+    name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
+    if(who.search(/dad|mom|mum|parent/) != -1) { //found match
       response = "Yes, our parents. We are shaped by others even before birth, are we not? It is a blessing and a burden that all living creatures must accept.";
     } else {
       response = `Oh? That's interesting. ${elaboration}`;
     }  
-  }
 
-  if(event.responded == "false") { //didn't respond to previous prompt
+  } else if(event.responded == "false") { //didn't respond to previous prompt
+    name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
     response = `Perhaps you don't know who did. That's okay. ${elaboration}`;
-  }
 
-  if(event.responded == "skip") { //didn't respond to the 1a prompt asking for their name
+  } else if(event.responded == "skip") { //didn't respond to the 1a prompt asking for their name
+    name = "unnamed";
+    if (callSid != "12345") { //this is bad, move to an upsert instead
+      await sync.addKVtoSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID,callSid, "name", name)
+     }
     response = "Keeping it close to your chest? Fine.";
   }
 

@@ -3,7 +3,6 @@
 module.exports = {
 
   async createSyncMap(client, SYNC_SVC_SID, name) {
-      console.log(`creating sync map with name ${name}...`)
       await client.sync.services(SYNC_SVC_SID)
         .syncMaps
         .create({uniqueName: name})
@@ -20,7 +19,6 @@ module.exports = {
     },
 
     async getValFromSyncMap(client, SYNC_SVC_SID, syncMapID, key) {
-      console.log(`retrieving ${key}...`)
       let val;
 
       await client.sync.services(SYNC_SVC_SID)

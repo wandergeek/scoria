@@ -46,7 +46,7 @@ List of living things:
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
-    action: '/3',
+    action: '/3?responded=true',
     }).say(`${filler} My name is Scoria. What's yours?`);
 
   // If no response, skip the whole name beat.
