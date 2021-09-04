@@ -23,7 +23,7 @@ List of mysterious farewell statements:
   }
   response += `${statement}`;
 
-  twiml.say(response)
+  twiml.say(response);
   twiml.pause(0.5);
   twiml.say(`I will leave you with that to ponder.`); 
   twiml.pause(0.8);

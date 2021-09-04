@@ -22,10 +22,10 @@ List of reasons to live:
   ]);
     response = `${userResponse}, eh? What a curious idea. You're ${description} human, that's for sure.`;
   } else { //didn't respond to previous prompt
-    response = `No strong thoughts? How strange. You're part of it, after all.`;
+    response = `No strong thoughts? How strange. You're part of this world too, you know.`;
   }
 
-  twiml.say(response)
+  twiml.say(response);
   twiml.pause(0.5);
   twiml.say(`Humour me by answering another question. Some people say the best use of a day is ${reason}.`)
   twiml.pause(0.5);

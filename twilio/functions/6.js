@@ -29,7 +29,7 @@ exports.handler = async (context, event, callback) => {
 
   twiml.say(response);
   twiml.pause(0.3);
-  twiml.say(`${name}, you know I come from the earth.`); 
+  twiml.say(`${name}, you can see I come from the earth. From deep in the mantle, I now rest in people's gardens.`); 
   twiml.pause(0.3);
   twiml.say(`Where are you at the moment?`); 
 

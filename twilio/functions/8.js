@@ -10,8 +10,6 @@ Human: I don't know if you're really alive.
 Rock: Do I not move over the millennia?
 Human: ${userResponse}
 Rock:`);
-
-  const userResponse = event.SpeechResult || "Yes, for sure.";
     
   let response = "";
 
@@ -33,7 +31,8 @@ Rock:`);
     response = "Alive enough to know when I'm being ignored.";
   }
 
-  twiml.say(`${argument}`)
+  twiml.say(response);
+  twiml.say(`But you know what? ${argument}`);
   twiml.pause(0.5);
   twiml.say(`That's what I think.`); 
   twiml.pause(0.5);
@@ -43,7 +42,6 @@ Rock:`);
     input: 'speech',
     speechTimeout: 'auto',
     action: '/9?responded=true',
-    actionOnEmptyResult: "true"
   }); 
 
   // If no response...

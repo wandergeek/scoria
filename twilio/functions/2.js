@@ -47,7 +47,6 @@ List of living things:
     input: 'speech',
     speechTimeout: 'auto',
     action: '/3',
-    actionOnEmptyResult: "true",
     }).say(`${filler} My name is Scoria. What's yours?`);
 
   // If no response, skip the whole name beat.
