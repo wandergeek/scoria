@@ -20,7 +20,7 @@ List of questions about nature:
     let who = event.SpeechResult.toLowerCase();
   
     if(who.search(parentsRegex) != -1) { //found match
-      response = "Yes, our parents. We are shaped by others even before birth, are we not? It is a blessing and burden, this shaping, that all living creatures must accept.";
+      response = "Yes, our parents. We are shaped by others even before birth, are we not? It is a blessing and a burden that all living creatures must accept.";
     } else {
       response = `Oh? That's interesting. ${elaboration}`;
     }  

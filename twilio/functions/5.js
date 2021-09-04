@@ -22,7 +22,7 @@ List of reasons to live:
   ]);
     response = `${userResponse}, eh? What a curious idea. You're ${description} human, that's for sure.`;
   } else { //didn't respond to previous prompt
-    response = `No opinion about the natural world? How strange. You're part of it, after all.`;
+    response = `No strong thoughts? How strange. You're part of it, after all.`;
   }
 
   twiml.say(response)

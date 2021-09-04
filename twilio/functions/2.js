@@ -46,7 +46,6 @@ List of living things:
   twiml.gather({
     input: 'speech',
     speechTimeout: 'auto',
-    timeout: '6', //excessive value to test whether this attribute allows for slow replies w/o introducing delay for quick replies
     action: '/3',
     actionOnEmptyResult: "true",
     }).say(`${filler} My name is Scoria. What's yours?`);

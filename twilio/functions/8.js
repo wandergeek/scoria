@@ -1,4 +1,3 @@
-const sync = require(Runtime.getAssets()["/sync.js"].path);
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
 const utils = require(Runtime.getAssets()["/utils.js"].path);
 

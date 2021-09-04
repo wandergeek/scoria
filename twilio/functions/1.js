@@ -22,7 +22,7 @@ exports.handler = async(context, event, callback) => {
   } else if (hour >= 16 && hour < 23) {
     greeting = `Good evening, human.`;
   } else {
-    greeting = `By god, human, it's late. You should be resting. Still.`;
+    greeting = `God, human, it's late. You should be resting. Still.`;
   }
 
   let platitude = utils.getRandomElement([
@@ -37,7 +37,7 @@ exports.handler = async(context, event, callback) => {
   twiml.play(`https://${context.DOMAIN_NAME}/intro.wav`)
   twiml.pause(0.5);
   twiml.say(`${greeting} ${platitude}`);
-  twiml.pause(0.3);
+  twiml.pause(0.2);
   twiml.say(`You are a human, aren't you?`);
 
   twiml.gather({
