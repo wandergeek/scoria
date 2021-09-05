@@ -1,10 +1,10 @@
 .PHONY: start
 start: check-vars
-	@ cd twilio && npm start
+	@ npm start
 
 .PHONY: deploy
 deploy: check-vars
-	@ cd twilio && twilio serverless:deploy
+	@ twilio serverless:deploy
 
 .PHONY: test
 test: check-vars
