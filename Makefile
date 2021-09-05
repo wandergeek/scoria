@@ -1,10 +1,15 @@
+.PHONY: init
+init: 
+	npm install
+
 .PHONY: start
 start: check-vars
-	@ npm start
+	@ if [ ! -d "node_modules" ]; then echo "Please run make init first"; exit 1; else npm start; fi
+	
 
 .PHONY: deploy
 deploy: check-vars
-	@ twilio serverless:deploy
+	twilio serverless:deploy
 
 .PHONY: test
 test: check-vars
@@ -12,6 +17,8 @@ test: check-vars
 
 .PHONY: check-vars
 check-vars: 
-	@test -n "$(OPENAI_API_KEY)"  #$$OPENAI_API_KEY needs to be set
-	@test -n "$(TWILIO_ACCOUNT_SID)"  #$$TWILIO_ACCOUNT_SID needs to be set
-	@test -n "$(TWILIO_AUTH_TOKEN)"  #$$TWILIO_AUTH_TOKEN needs to be set
+	@./scripts/check-vars.sh
+
+.PHONY: logs
+logs:
+	twilio serverless:logs
