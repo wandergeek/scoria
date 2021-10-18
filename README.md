@@ -18,7 +18,6 @@ twilio login
 
 ## Test
 ```
-cd twilio
 echo OPENAI_API_KEY=XXXXXXX >> .env
 echo ACCOUNT_SID=XXXXXXX >> .env
 echo AUTH_TOKEN=XXXXXXX >> .env
@@ -27,10 +26,7 @@ curl http://localhost:3000/1 # example command
 ```
 
 ## Deploy
-
-### Functions
 ```
-cd twilio
 twilio serverless:deploy
 twilio serverless:logs # run periodically to get logs
 ```

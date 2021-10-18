@@ -13,13 +13,13 @@ List of questions about nature:
   
   let name = "";
   let response = "";
-  let elaboration = "Me, I have ten thousand siblings, all born in the same instant. Our names inscribed by the oxygen that brushed our bodies as we left our mother.";
+  let elaboration = "Me, I have ten thousand siblings, all born in the same instant. Our names inscribed by the air that brushed our bodies as we left our mother.";
 
   if(event.responded == "true") {
     let who = event.SpeechResult.toLowerCase();
     name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
     if(who.search(/dad|mom|mum|parent/) != -1) { //found match
-      response = "Yes, our parents. We are shaped by others even before birth, are we not? It is a blessing and a burden that all living creatures must accept.";
+      response = "Yes, our parents. We are shaped by others even before birth, are we not? A blessing and a burden that all living creatures must accept.";
     } else {
       response = `Oh? That's interesting. ${elaboration}`;
     }  
@@ -28,8 +28,8 @@ List of questions about nature:
     name = await sync.getValFromSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID, callSid, "name");
     response = `Perhaps you don't know who did. That's okay. ${elaboration}`;
 
-  } else if(event.responded == "skip") { //didn't respond to the 1a prompt asking for their name
-    name = "unnamed";
+  } else if(event.responded == "skip") { //didn't respond to the prompt asking for their name
+    name = "Silent one";
     if (callSid != "12345") { //this is bad, move to an upsert instead
       await sync.addKVtoSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID,callSid, "name", name)
      }

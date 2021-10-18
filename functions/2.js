@@ -1,16 +1,7 @@
-const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
 const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async(context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-
-
-  const creatures = await gpt3.callOpenAI(`
-List of living things:
-- Lizards and clouds
-- Crows and wattle trees
-- Creeks and caterpillars
--`)
 
   if(event.responded == "true") {
     let adjective = utils.getRandomElement([
@@ -26,13 +17,15 @@ List of living things:
 
   twiml.say(response);
   twiml.pause(0.2);
-  twiml.say(`After all, you must be a human. ${creatures} can't speak. Not in your strange tongue anyway.`)
+  twiml.say(`After all, you must be a human.`)
   twiml.pause(0.2);
 
   let filler = utils.getRandomElement([
-    "Hey, but I haven't even introduced myself properly.",
-    "I think we've seen each other before, but I don't know your name.",
-    "I believe we've met before, but not introduced ourselves."
+    "But I haven't even introduced myself.",
+    "We've seen each other before, but I don't know your name.",
+    "We've met before, but not introduced ourselves.",
+    "Anyway,",
+    "More human than me, anyway."
   ]);
 
   twiml.gather({

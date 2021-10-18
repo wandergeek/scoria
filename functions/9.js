@@ -1,34 +1,52 @@
 const gpt3 = require(Runtime.getAssets()["/gpt3.js"].path);
+const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async (context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
-
-  const statement = await gpt3.callOpenAI(`
-Questions about the future:
-- If trees don't breathe, what is left?
-- If kangaroos were in your living room, would you turn away?
--`);
-
-  const farewell = await gpt3.callOpenAI(`
-List of mysterious farewell statements:
-- I will melt into the earth.
-- May you commune with the moss.
--`);
-
+  const userResponse = event.SpeechResult || "You operate on an entirely alien time scale.";
+  const argument = await gpt3.callOpenAI(`
+A rock convinces a human that it deserves to be treated as a person.
+Human: I don't know if you're really alive.
+Rock: Do I not move over the millennia?
+Human: ${userResponse}
+Rock:`);
+    
   let response = "";
+
   if(event.responded == "true") {
-    response = "That may be so, but ";
+    switch (utils.checkSentiment(userResponse)) {
+      case "negative":
+        response = "Perhaps I can convince you that I am.";
+        break;
+
+      case "neutral":
+        response = "Is that so?";
+        break;
+
+      case "affirmative":
+        response = "How kind of you.";
+        break;
+    }
   } else { //didn't respond to previous prompt
-    response = "If you haven't anything to say, fine, but ";
+    response = "Alive enough to know when I'm being ignored.";
   }
-  response += `${statement}`;
 
   twiml.say(response);
   twiml.pause(0.5);
-  twiml.say(`I will leave you with that to ponder.`); 
-  twiml.pause(0.8);
-  twiml.say(`${farewell}`); 
+  twiml.say(`But you know what? ${argument}`);
   twiml.pause(0.5);
-  twiml.play(`https://${context.DOMAIN_NAME}/outro.wav`)
+  twiml.say(`What do you have to say about that?`);
+
+  twiml.gather({
+    input: 'speech',
+    speechTimeout: 'auto',
+    action: '/10?responded=true',
+  }); 
+
+  // If no response...
+  twiml.redirect({
+    method: 'POST'
+  }, '/10?responded=false');
+
   callback(null, twiml);
 };

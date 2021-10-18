@@ -29,9 +29,9 @@ exports.handler = async (context, event, callback) => {
 
   twiml.say(response);
   twiml.pause(0.3);
-  twiml.say(`${name}, you can see I come from the earth. From deep in the mantle, I now rest in people's gardens.`); 
+  twiml.say(`${name}, I came from deep in the mantle, very deep, and now rest in people's gardens.`); 
   twiml.pause(0.3);
-  twiml.say(`Where are you at the moment?`); 
+  twiml.say(`What about you? Where are you at the moment?`); 
 
   twiml.gather({
     input: 'speech',

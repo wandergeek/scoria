@@ -7,8 +7,6 @@ exports.handler = async(context, event, callback) => {
   let timezone = event.timezone || 'Australia/Melbourne';
   const hour = moment().tz(timezone).format('H');
    
-
-
   if(typeof event.CallSid != 'undefined') { //callSID not defined when testing locally
     await context.getTwilioClient().calls(event.CallSid) 
     .recordings

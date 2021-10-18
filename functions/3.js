@@ -49,7 +49,7 @@ List of things that sound like a name:
     input: 'speech',
     speechTimeout: 'auto',
     action: '/4?responded=true'
-  }).say(`May I ask, who gave you that name?`);
+  }).say(`Who gave you that name?`);
 
   // If no response...
   twiml.redirect({
