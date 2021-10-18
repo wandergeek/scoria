@@ -6,13 +6,16 @@ exports.handler = async(context, event, callback) => {
   let moment = require('moment-timezone');
   let timezone = event.timezone || 'Australia/Melbourne';
   const hour = moment().tz(timezone).format('H');
-    //slicing the call sid to the last 10 chars, otherwise the twilio api complains. probably for good reason? we should probably key to something else.
-  const callSid = (typeof event.CallSid === 'undefined') ? "12345" : event.CallSid.slice(-10); 
-  const client = context.getTwilioClient();
+   
 
-  if (callSid != "12345") { 
-    //Create a sync map which will store all the persistent data for the call -- the map is keyed by a truncated callSID from the event
-    await sync.createSyncMap(client, context.SYNC_SVC_SID, callSid); //this is not great to nest within the test sid branch
+
+  if(typeof event.CallSid != 'undefined') { //callSID not defined when testing locally
+    await context.getTwilioClient().calls(event.CallSid) 
+    .recordings
+    .create({
+      recordingStatusCallback: `https://${context.DOMAIN_NAME}/recordEvents`
+    })
+    .then(recording => console.log(`created recording with sid ${recording.sid}`));
   }
 
   if (hour >= 5 && hour < 12) {

@@ -47,7 +47,6 @@ twilio serverless:logs # run periodically to get logs
     * total words detected
 
 ### Low priority
-* record from beginning of call rather than 1a
 * add parameter to specify gpt model per prompt
 * separate content from code
 * composite cody's sounds with voice?
@@ -55,6 +54,7 @@ twilio serverless:logs # run periodically to get logs
 * add caller name to notifications to distinguish them more easily
 
 ### Done
+* ~record from beginning of call rather than 1a~
 * ~use GPT3 for responses~
 * ~figure out a way to share state between functions or fold all functions together~
 * ~create a class to help deal with gpt3 interactions~

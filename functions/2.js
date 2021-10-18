@@ -4,14 +4,6 @@ const utils = require(Runtime.getAssets()["/utils.js"].path);
 exports.handler = async(context, event, callback) => {
   const twiml = new Twilio.twiml.VoiceResponse();
 
-  if(typeof event.CallSid != 'undefined') { //callSID not defined when testing locally
-    await context.getTwilioClient().calls(event.CallSid) 
-    .recordings
-    .create({
-      recordingStatusCallback: `https://${context.DOMAIN_NAME}/recordEvents`
-    })
-    .then(recording => console.log(`created recording with sid ${recording.sid}`));
-  }
 
   const creatures = await gpt3.callOpenAI(`
 List of living things:
