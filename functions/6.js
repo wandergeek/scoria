@@ -24,7 +24,7 @@ exports.handler = async (context, event, callback) => {
         break;
     }
   } else { //didn't respond to previous prompt
-    response = "I'm sorry you don't feel comfortable talking to me. You and I are more alike than you might think.";
+    response = "You and I are more alike than you might think.";
   }
 
   twiml.say(response);

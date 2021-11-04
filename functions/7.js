@@ -9,7 +9,9 @@ Proverbs about the natural world:
 - Outside is the place where the sun can see.
 - ${userResponse}`);
 
-  twiml.say(`Well, you know what they say: ${proverb}`);
+  twiml.say(`Well, you know what they say:`);
+  twiml.pause(0.5);
+  twiml.say(`${userResponse} ${proverb}`);
   twiml.pause(0.5);
   twiml.say(`But I digress. Tell me, what is the nearest living thing to you?`); 
 

@@ -22,12 +22,12 @@ List of reasons to live:
   ]);
     response = `${userResponse}, eh? How curious. You're ${description} human, that's for sure.`;
   } else { //didn't respond to previous prompt
-    response = `No strong thoughts? A shame. You're part of this world too, you know.`;
+    response = `You and me are in this together, you know.`;
   }
 
   twiml.say(response);
   twiml.pause(0.5);
-  twiml.say(`Give me some advice. Some people say the best use of a day is ${reason}.`)
+  twiml.say(`Give me some advice. Some people reckon the best use of a day is ${reason}.`)
   twiml.pause(0.5);
   twiml.say(`What do you think?`)
   twiml.gather({

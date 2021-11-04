@@ -1,4 +1,3 @@
-const sync = require(Runtime.getAssets()["/sync.js"].path);
 const utils = require(Runtime.getAssets()["/utils.js"].path);
 
 exports.handler = async(context, event, callback) => {
@@ -32,14 +31,24 @@ exports.handler = async(context, event, callback) => {
     "How wonderful of you to call.",
     "How nice of you to call.",
     "I'm flattered that you called.",
-    "It's marvellous that we can talk."
+    "How marvellous we can chat.",
+    "I was wondering when you'd call.",
+    "It's about time you got in touch.",
+    "It's a glorious day.",
+    "So glad you called.",
+    "Super of you to call."
+  ]);
+
+  let question = utils.getRandomElement([
+    "You are a human, aren't you?",
+    "I am speaking to a human, right?"
   ]);
 
   twiml.play(`https://${context.DOMAIN_NAME}/intro.wav`)
   twiml.pause(0.5);
   twiml.say(`${greeting} ${platitude}`);
   twiml.pause(0.2);
-  twiml.say(`You are a human, aren't you?`);
+  twiml.say(`${question}`);
 
   twiml.gather({
     input: 'speech',

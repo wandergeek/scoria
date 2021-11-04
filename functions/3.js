@@ -43,7 +43,9 @@ List of things that sound like a name:
     "a wondrous"
   ]);
 
-  twiml.say(`${name}, huh? What ${nameDescriptor} name. It reminds me of ${namePhrase}.`)
+  twiml.say(`${name}, huh?`)
+  twiml.pause(0.5);
+  twiml.say(`What ${nameDescriptor} name. It reminds me of ${namePhrase}.`)
   twiml.pause(0.5);
   twiml.gather({
     input: 'speech',

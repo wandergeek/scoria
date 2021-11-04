@@ -33,7 +33,7 @@ Rock:`);
 
   twiml.say(response);
   twiml.pause(0.5);
-  twiml.say(`But you know what? ${argument}`);
+  twiml.say(`${argument}`);
   twiml.pause(0.5);
   twiml.say(`What do you have to say about that?`);
 
