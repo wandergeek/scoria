@@ -5,9 +5,9 @@ exports.handler = async (context, event, callback) => {
   const userResponse = event.SpeechResult || "The suburbs";
   const proverb = await gpt3.callOpenAI(`
 Proverbs about the natural world:
-- Home is where the dirt is softest.
-- Outside is the place where the sun can see.
-- ${userResponse}`);
+- is where the dirt is softest.
+- is the place where the sun can see.
+-`);
 
   twiml.say(`Well, you know what they say:`);
   twiml.pause(0.5);

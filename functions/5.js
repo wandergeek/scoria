@@ -19,8 +19,14 @@ List of reasons to live:
       "an imaginative",
       "a romantic",
       "a pessimistic"
-  ]);
-    response = `${userResponse}, eh? How curious. You're ${description} human, that's for sure.`;
+    ]);
+    let filler = utils.getRandomElement([
+      ", that's for sure",
+      ", no doubt about that",
+      ". Good for you",
+      ""
+    ]);
+    response = `${userResponse}, eh? How curious. You're ${description} human${filler}.`;
   } else { //didn't respond to previous prompt
     response = `You and me are in this together, you know.`;
   }

@@ -22,7 +22,7 @@ exports.handler = async(context, event, callback) => {
   } else if (hour >= 16 && hour < 23) {
     greeting = `Good evening, human.`;
   } else {
-    greeting = `God, human, it's late. You should be resting. Still.`;
+    greeting = `God, human, it's late. Even so.`;
   }
 
   let platitude = utils.getRandomElement([
