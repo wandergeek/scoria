@@ -8,32 +8,32 @@ exports.handler = async(context, event, callback) => {
       "Silly",
       "Odd",
       "Strange",
-      "Awkward"
+      "Awkward",
+      "Lame"
     ]);
-    response = `${adjective} question, I know.`;
+    response = `${adjective} of me to ask, I know.`;
   } else { //didn't respond to previous prompt
     response = `No need to answer.`;
   }
 
   twiml.say(response);
   twiml.pause(0.2);
-  twiml.say(`After all, you must be a human.`)
+  twiml.say(`I think I can trust you.`)
   twiml.pause(0.2);
 
   let filler = utils.getRandomElement([
     "But I haven't even introduced myself.",
-    "We've seen each other before, but I don't know your name.",
-    "We've met before, but not introduced ourselves.",
-    "Anyway,",
-    "More human than me, anyway.",
-    "Let's cut to the chase."
+    "But I don't know who you are.",
+    "You seem like a harmless bag of meat.",
+    "Let's cut to the chase.",
+    "So.",
+    "And you can trust me, of course.",
+    "As much as any human can be trusted."
   ]);
 
   let name = utils.getRandomElement([
     "My name is Scoria. What's yours?",
-    "My name is Scoria. Who am I speaking to?",
-    "Some call me Scoria. What's your name?",
-    "I'm Scoria. What's your name?"
+    "Some call me Scoria. What's your name?"
   ]);
 
   twiml.gather({

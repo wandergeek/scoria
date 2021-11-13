@@ -13,7 +13,7 @@ List of questions about nature:
   
   let name = "";
   let response = "";
-  let elaboration = "Me, I have ten thousand siblings, all born in the same instant. Our names inscribed by the air that brushed our bodies as we left our mother.";
+  let elaboration = "Me, I have ten thousand siblings, all born in the same instant. Our names were inscribed by the air that brushed our bodies as we were ejected from the earth.";
 
   if(event.responded == "true") {
     let who = event.SpeechResult.toLowerCase();
@@ -33,7 +33,7 @@ List of questions about nature:
     if (callSid != "12345") { //this is bad, move to an upsert instead
       await sync.addKVtoSyncMap(context.getTwilioClient(),context.SYNC_SVC_SID,callSid, "name", name)
      }
-    response = "Keeping it close to your chest? Fine.";
+    response = "I didn't catch that, but not to worry.";
   }
 
   twiml.say(response);

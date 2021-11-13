@@ -22,26 +22,29 @@ exports.handler = async(context, event, callback) => {
   } else if (hour >= 16 && hour < 23) {
     greeting = `Good evening, human.`;
   } else {
-    greeting = `God, human, it's late. Even so.`;
+    greeting = `God, human, it's late.`;
   }
 
   let platitude = utils.getRandomElement([
-    "I'm pleased to hear from you.",
+    "I'm psyched to hear from you.",
     "I'm delighted to hear from you.",
-    "How wonderful of you to call.",
-    "How nice of you to call.",
-    "I'm flattered that you called.",
-    "How marvellous we can chat.",
+    "Fabulous to hear your voice.",
     "I was wondering when you'd call.",
-    "It's about time you got in touch.",
-    "It's a glorious day.",
+    "About time you got in touch.",
     "So glad you called.",
-    "Super of you to call."
+    "Super of you to call.",
+    "I need your advice.",
+    "We need to talk.",
+    "I've been waiting for your call.",
+    "You're one of the brave ones."
   ]);
 
   let question = utils.getRandomElement([
     "You are a human, aren't you?",
-    "I am speaking to a human, right?"
+    "Can we get real for a minute?",
+    "No one else is listening, are they?",
+    "Can you keep this call between us?",
+    "You're not one of those dingbats on Sydney Road are you?"
   ]);
 
   twiml.play(`https://${context.DOMAIN_NAME}/intro.wav`)
