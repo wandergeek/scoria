@@ -9,7 +9,7 @@ List of living things:
 - Creeks and caterpillars
 -`);
 
-  twiml.say(`There is so much life around us. ${creatures} are but the most obvious to the human eye.`);
+  twiml.say(`Wonderful. There is so much life around us. ${creatures} are but the most obvious to the human eye.`);
   twiml.pause(0.5);
   twiml.say(`What about me? I have an igneous heart.`); 
   twiml.pause(0.5);

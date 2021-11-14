@@ -6,10 +6,8 @@ exports.handler = async(context, event, callback) => {
   if(event.responded == "true") {
     let adjective = utils.getRandomElement([
       "Silly",
-      "Odd",
       "Strange",
-      "Awkward",
-      "Lame"
+      "Awkward"
     ]);
     response = `${adjective} of me to ask, I know.`;
   } else { //didn't respond to previous prompt
@@ -26,14 +24,13 @@ exports.handler = async(context, event, callback) => {
     "But I don't know who you are.",
     "You seem like a harmless bag of meat.",
     "Let's cut to the chase.",
-    "So.",
     "And you can trust me, of course.",
     "As much as any human can be trusted."
   ]);
 
   let name = utils.getRandomElement([
     "My name is Scoria. What's yours?",
-    "Some call me Scoria. What's your name?"
+    "You can call me Scoria. What should I call you?"
   ]);
 
   twiml.gather({
